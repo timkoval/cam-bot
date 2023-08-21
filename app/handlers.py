@@ -6,12 +6,19 @@ from datetime import datetime, timedelta
 from setup import bot, CHAT_ID
 from hachiko.hachiko import AIOEventHandler
 
+EVENT_TYPE_OPENED = "opened"
 
 class FilesHandler(AIOEventHandler):
+    def __init__(self, loop=None):
+        super().__init__(loop)
+        self._method_map[EVENT_TYPE_OPENED] = self.on_opened
+
     async def on_any_event(self, event):
-        logging.info(event.event_type, event.src_path)
+        ...
 
     async def on_created(self, event):
-        logging.info("on_created", event.src_path)
         logging.info(event.src_path.strip())
         await bot.send_video(CHAT_ID, open(event.src_path, "rb"))
+
+    async def on_opened(self, event):
+        ...
