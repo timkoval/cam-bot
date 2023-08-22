@@ -10,9 +10,10 @@ load_dotenv()
 API_TOKEN = os.getenv("API_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 WATCH_DIR = os.getenv("WATCH_DIR")
+VIDEO_DURATION = os.getenv("VIDEO_DURATION", default=31)
 
 logging.basicConfig(level=logging.INFO)
 
 storage = MemoryStorage()
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=API_TOKEN, timeout=None)
 dispatcher = Dispatcher(bot, storage=storage)

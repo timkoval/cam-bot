@@ -3,11 +3,12 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from datetime import datetime, timedelta
-from setup import bot, CHAT_ID
+from setup import bot, CHAT_ID, VIDEO_DURATION
 from hachiko.hachiko import AIOEventHandler
 from asyncio import sleep
 
 EVENT_TYPE_OPENED = "opened"
+
 
 class FilesHandler(AIOEventHandler):
     def __init__(self, loop=None):
@@ -19,7 +20,7 @@ class FilesHandler(AIOEventHandler):
 
     async def on_created(self, event):
         logging.info(event.src_path.strip())
-        await sleep(65)
+        await sleep(VIDEO_DURATION)
         await bot.send_video(CHAT_ID, open(event.src_path, "rb"))
 
     async def on_opened(self, event):
